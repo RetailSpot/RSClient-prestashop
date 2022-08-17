@@ -39,7 +39,7 @@ class PsRetailSpotVideo extends Module
     return (
       parent::install() 
       && $this->registerHook('header')
-      && Configuration::updateValue('RETAILSPOTVIDEO_NAME', 'RetailSpot Video')
+      && Configuration::updateValue('RETAILSPOTVIDEO_NAME', 'RetailSpotVideo')
     ); 
   }
 
@@ -62,16 +62,18 @@ class PsRetailSpotVideo extends Module
     // this part is executed only when the form is submitted
     if (Tools::isSubmit('submit' . $this->name)) {
       // retrieve the value set by the user
-      $configValue = (string) Tools::getValue('RETAILSPOTVIDEO_PLACEMENT');
+      $placement = (string) Tools::getValue('rsvideo_placement');
 
-      // check that the value is valid
-      if (empty($configValue) ) { // || !Validate::isGenericName($configValue)
+      // check that every values are valid
+      if (empty($placement) ) {
         // invalid value, show an error
-        $output = $this->displayError($this->l('Invalid Configuration value'));
+        $output = $this->displayError($this->l('Invalid Placement Id'));
       } else {
         // value is ok, update it and display a confirmation message
-        Configuration::updateValue('MYMODULE_CONFIG', $configValue);
-        $output = $this->displayConfirmation($this->l('Settings updated'));
+        Configuration::updateValue('rsvideo_placement', $placement);
+        Configuration::updateValue('rsvideo_intext_enabled', $placement);
+        Configuration::updateValue('rsvideo_slider_enabled', $placement);
+        $output = $this->displayConfirmation($this->l('Settings updated val : '.Tools::getValue('rsvideo_intext_enabled')));
       }
     }
 
@@ -95,10 +97,43 @@ class PsRetailSpotVideo extends Module
                 [
                     'type' => 'text',
                     'label' => $this->l('Placement ID'),
-                    'name' => 'RETAILSPOTVIDEO_PLACEMENT',
+                    'name' => 'rsvideo_placement',
                     'size' => 32,
                     'required' => true,
-                    'hint' => $this->l('2003')
+                    'hint' => $this->l('Get in touch with your RetailSpot contact to generate a plecement id')
+                ],
+                [
+                  'type' => 'checkbox',
+                  'name' => 'rsvideo_intext',
+                  'desc' => 'Shows an expandable video inside article lists',
+                  'values' => [
+                    'query' => [
+                      [
+                          'id' => 'enabled',
+                          'name' => $this->l('Enable expandable video'),
+                          'val' => '1'
+                      ],
+                    ],
+                    'id' => 'id',
+                    'name' => 'name'
+                  ]
+                ],
+                [
+                  'type' => 'checkbox',
+                  'name' => 'rsvideo_slider',
+                  'desc' => 'Shows a sliding video overlay',
+                  'values' => [
+                    'query' => [
+                      [
+                          'id' => 'enabled',
+                          'name' => $this->l('Enable sliding video'),
+                          'val' => '1'
+                      ]
+                    ],
+                    'id' => 'id',
+                    'name' => 'name',
+                    'value' => '1'
+                  ]
                 ],
             ],
             'submit' => [
@@ -121,7 +156,10 @@ class PsRetailSpotVideo extends Module
     $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
 
     // Load current value into the form
-    $helper->fields_value['RETAILSPOTVIDEO_PLACEMENT'] = Tools::getValue('RETAILSPOTVIDEO_PLACEMENT', Configuration::get('RETAILSPOTVIDEO_PLACEMENT'));
+    $helper->fields_value['rsvideo_placement'] = Tools::getValue('rsvideo_placement', Configuration::get('rsvideo_placement'));
+
+    $helper->fields_value['rsvideo_intext_enabled'] = Tools::getValue('rsvideo_intext_enabled', Configuration::get('rsvideo_intext_enabled'));
+    $helper->fields_value['rsvideo_slider_enabled'] = Tools::getValue('rsvideo_slider_enabled', Configuration::get('rsvideo_slider_enabled'));
 
     return $helper->generateForm([$form]);
   }
