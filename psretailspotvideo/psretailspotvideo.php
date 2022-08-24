@@ -71,8 +71,8 @@ class PsRetailSpotVideo extends Module
       } else {
         // value is ok, update it and display a confirmation message
         Configuration::updateValue('rsvideo_placement', $placement);
-        Configuration::updateValue('rsvideo_intext_enabled', $placement);
-        Configuration::updateValue('rsvideo_slider_enabled', $placement);
+        Configuration::updateValue('rsvideo_intext_enabled', Tools::getValue('rsvideo_intext_enabled'));
+        Configuration::updateValue('rsvideo_slider_enabled', Tools::getValue('rsvideo_slider_enabled'));
         $output = $this->displayConfirmation($this->l('Settings updated val : '.Tools::getValue('rsvideo_intext_enabled')));
       }
     }
@@ -90,18 +90,29 @@ class PsRetailSpotVideo extends Module
     // Init Fields form array
     $form = [
         'form' => [
+          'legend' => [
+              'title' => $this->l('Slider settings'),
+          ],
+          'input' => [
+            [
+                'type' => 'text',
+                'label' => $this->l('Placement ID'),
+                'name' => 'rsvideo_placement',
+                'size' => 32,
+                'required' => true,
+                'hint' => $this->l('Get in touch with your RetailSpot contact to generate a plecement id')
+            ],
+            'submit' => [
+                'title' => $this->l('Save'),
+                'class' => 'btn btn-default pull-right',
+            ],
+          ]
+        ],
+        'form' => [
             'legend' => [
-                'title' => $this->l('Settings'),
+                'title' => $this->l('Expand ad Settings'),
             ],
             'input' => [
-                [
-                    'type' => 'text',
-                    'label' => $this->l('Placement ID'),
-                    'name' => 'rsvideo_placement',
-                    'size' => 32,
-                    'required' => true,
-                    'hint' => $this->l('Get in touch with your RetailSpot contact to generate a plecement id')
-                ],
                 [
                   'type' => 'checkbox',
                   'name' => 'rsvideo_intext',
@@ -132,7 +143,6 @@ class PsRetailSpotVideo extends Module
                     ],
                     'id' => 'id',
                     'name' => 'name',
-                    'value' => '1'
                   ]
                 ],
             ],

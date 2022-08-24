@@ -28,7 +28,7 @@ You can edit docker-compose.yml to change the version or to run multiple version
 Admin page can be accessed at
 
 ```
-localhost:8080/psadmin/index.php
+localhost:8081/psadmin/index.php
 ```
 
 Email: demo@prestashop.com
