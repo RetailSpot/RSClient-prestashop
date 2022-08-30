@@ -1,6 +1,38 @@
 # RetailSpot Video Advertising - prestashop module
 
-Provide easy integration for RetailSpot Ads in Prestashop
+## Description
+
+Provide easy integration for RetailSpot Ads in Prestashop.
+
+Can show two ads at once. Configuration parameters are provided in prestashop module configuration page.
+This customized javascrip will be included in the page:
+
+```
+        (function(){
+          window.RetailSpotConfig = [
+            {
+              vastUrl: "https://ads.stickyadstv.com/vast/vpaid-adapter/2003",
+              format: "slider",
+              width: 320,
+              height: 180,
+              align: "left", // default is bottom right
+              vmargin: 50, // default is 30
+              hmargin: 50, // default is 30
+            },
+            {
+              vastUrl: "https://ads.stickyadstv.com/vast/vpaid-adapter/2003",
+              format: "intext"
+              width: 400,
+              height: 225,
+              CSSSelector: "#target"
+            }
+          ]
+
+          var s = document.createElement("script");
+          s.src = "http://localhost:3000/dist/rsplayer.js";
+          document.body.appendChild(s);
+        })();
+```
 
 ## Prerequisites
 

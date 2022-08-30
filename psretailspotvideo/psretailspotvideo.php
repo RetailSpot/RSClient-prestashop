@@ -62,18 +62,24 @@ class PsRetailSpotVideo extends Module
     // this part is executed only when the form is submitted
     if (Tools::isSubmit('submit' . $this->name)) {
       // retrieve the value set by the user
-      $placement = (string) Tools::getValue('rsvideo_placement');
+      $placement1 = (string) Tools::getValue('rsvideo_slider_placement');
+      $placement2 = (string) Tools::getValue('rsvideo_intext_placement');
 
       // check that every values are valid
-      if (empty($placement) ) {
+      if (empty($placement1) && empty($placement2) ) {
         // invalid value, show an error
-        $output = $this->displayError($this->l('Invalid Placement Id'));
+        $output = $this->displayError($this->l('You should set at least one placement Id.'));
       } else {
         // value is ok, update it and display a confirmation message
-        Configuration::updateValue('rsvideo_placement', $placement);
-        Configuration::updateValue('rsvideo_intext_enabled', Tools::getValue('rsvideo_intext_enabled'));
-        Configuration::updateValue('rsvideo_slider_enabled', Tools::getValue('rsvideo_slider_enabled'));
-        $output = $this->displayConfirmation($this->l('Settings updated val : '.Tools::getValue('rsvideo_intext_enabled')));
+        Configuration::updateValue('rsvideo_slider_placement', $placement1);
+        Configuration::updateValue('rsvideo_slider_width', Tools::getValue('rsvideo_slider_width'));
+        Configuration::updateValue('rsvideo_slider_height', Tools::getValue('rsvideo_slider_height'));
+        Configuration::updateValue('rsvideo_slider_align', Tools::getValue('rsvideo_slider_align'));
+        Configuration::updateValue('rsvideo_intext_placement', $placement2);
+        Configuration::updateValue('rsvideo_intext_width', Tools::getValue('rsvideo_intext_width'));
+        Configuration::updateValue('rsvideo_intext_height', Tools::getValue('rsvideo_intext_height'));
+        Configuration::updateValue('rsvideo_intext_target', Tools::getValue('rsvideo_intext_target'));
+        $output = $this->displayConfirmation($this->l('Settings updated.'));
       }
     }
 
@@ -89,68 +95,113 @@ class PsRetailSpotVideo extends Module
   {
     // Init Fields form array
     $form = [
-        'form' => [
-          'legend' => [
-              'title' => $this->l('Slider settings'),
+      'form' => [
+        'legend' => [
+            'title' => $this->l('RetailSpot Ad settings'),
+            'desc' => 'Setup a sliding and/or an expanding ad.',
+        ],
+        'input' => [
+          [
+            'type' => 'text',
+            'label' => $this->l('Slider Placement ID'),
+            'name' => 'rsvideo_slider_placement',
+            'size' => 32,
+            'hint' => $this->l('Get in touch with your RetailSpot contact to generate a placement id')
           ],
-          'input' => [
-            [
-                'type' => 'text',
-                'label' => $this->l('Placement ID'),
-                'name' => 'rsvideo_placement',
-                'size' => 32,
-                'required' => true,
-                'hint' => $this->l('Get in touch with your RetailSpot contact to generate a plecement id')
-            ],
-            'submit' => [
-                'title' => $this->l('Save'),
-                'class' => 'btn btn-default pull-right',
-            ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Slider Width'),
+            'name' => 'rsvideo_slider_width',
+            'size' => 3,
+            'value' => 320
+          ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Slider Height'),
+            'name' => 'rsvideo_slider_height',
+            'size' => 3,
+            'value' => 180,
+            'desc' => $this->l('Slider video size in pixels')
+          ],
+          [
+            'type' => 'select',                              // This is a <select> tag.
+            'label' => $this->l('Slider alignment'),         // The <label> for this <select> tag.
+            'desc' => $this->l('Define sliding video position on the page.'),  // A help text, displayed right next to the <select> tag.
+            'name' => 'rsvideo_slider_align',                               // The content of the 'id' attribute of the <select> tag.
+            'options' => [
+              'query' => [
+                [
+                  'id_option' => "bottom right",// The value of the 'value' attribute of the <option> tag.
+                  'name' => 'Bottom Right'      // The value of the text content of the  <option> tag.
+                ],
+                [
+                  'id_option' => "bottom",
+                  'name' => 'Bottom'    
+                ],
+                [
+                  'id_option' => "bottom left",
+                  'name' => 'Bottom Left'    
+                ],
+                [
+                  'id_option' => "top left",
+                  'name' => 'Top Left'    
+                ],
+                [
+                  'id_option' => "top right",
+                  'name' => 'Top Right'    
+                ],
+                [
+                  'id_option' => "top",
+                  'name' => 'Top'    
+                ],
+                [
+                  'id_option' => "left",
+                  'name' => 'Left'    
+                ],
+                [
+                  'id_option' => "right",
+                  'name' => 'Right'    
+                ]
+              ] ,                           
+              'id' => 'id_option', // The value of the 'id' key must be the same as the key for 'value' attribute of the <option> tag in each $options sub-array.
+              'name' => 'name'     // The value of the 'name' key must be the same as the key for the text content of the <option> tag in each $options sub-array.
+            ]
+          ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Expand Ad Placement ID'),
+            'name' => 'rsvideo_intext_placement',
+            'size' => 32,
+            'hint' => $this->l('Get in touch with your RetailSpot contact to generate a placement id')
+          ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Expanded Width'),
+            'name' => 'rsvideo_intext_width',
+            'size' => 3,
+            'value' => 320,
+          ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Expanded Height'),
+            'name' => 'rsvideo_intext_height',
+            'size' => 3,
+            'val' => 180,
+            'desc' => $this->l('Expand video size in pixels')
+          ],
+          [
+            'type' => 'text',
+            'label' => $this->l('Position CSS Selector'),
+            'name' => 'rsvideo_intext_target',
+            'size' => 50,
+            'desc' => $this->l('Target an element in the page using CSS selector. If not provided expand video position will be chosen automatically.')
           ]
         ],
-        'form' => [
-            'legend' => [
-                'title' => $this->l('Expand ad Settings'),
-            ],
-            'input' => [
-                [
-                  'type' => 'checkbox',
-                  'name' => 'rsvideo_intext',
-                  'desc' => 'Shows an expandable video inside article lists',
-                  'values' => [
-                    'query' => [
-                      [
-                          'id' => 'enabled',
-                          'name' => $this->l('Enable expandable video'),
-                          'val' => '1'
-                      ],
-                    ],
-                    'id' => 'id',
-                    'name' => 'name'
-                  ]
-                ],
-                [
-                  'type' => 'checkbox',
-                  'name' => 'rsvideo_slider',
-                  'desc' => 'Shows a sliding video overlay',
-                  'values' => [
-                    'query' => [
-                      [
-                          'id' => 'enabled',
-                          'name' => $this->l('Enable sliding video'),
-                          'val' => '1'
-                      ]
-                    ],
-                    'id' => 'id',
-                    'name' => 'name',
-                  ]
-                ],
-            ],
-            'submit' => [
-                'title' => $this->l('Save'),
-                'class' => 'btn btn-default pull-right',
-            ],
-        ],
+        'submit' => [
+            'title' => $this->l('Save'),
+            'class' => 'btn btn-default pull-right',
+        ]
+      ]
     ];
 
     $helper = new HelperForm();
@@ -166,10 +217,16 @@ class PsRetailSpotVideo extends Module
     $helper->default_form_language = (int) Configuration::get('PS_LANG_DEFAULT');
 
     // Load current value into the form
-    $helper->fields_value['rsvideo_placement'] = Tools::getValue('rsvideo_placement', Configuration::get('rsvideo_placement'));
+    $helper->fields_value['rsvideo_slider_placement'] = Tools::getValue('rsvideo_slider_placement', Configuration::get('rsvideo_slider_placement'));
+    $helper->fields_value['rsvideo_slider_width'] = Tools::getValue('rsvideo_slider_width', Configuration::get('rsvideo_slider_width'));
+    $helper->fields_value['rsvideo_slider_height'] = Tools::getValue('rsvideo_slider_height', Configuration::get('rsvideo_slider_height'));
+    $helper->fields_value['rsvideo_slider_align'] = Tools::getValue('rsvideo_slider_align', Configuration::get('rsvideo_slider_align'));
 
-    $helper->fields_value['rsvideo_intext_enabled'] = Tools::getValue('rsvideo_intext_enabled', Configuration::get('rsvideo_intext_enabled'));
-    $helper->fields_value['rsvideo_slider_enabled'] = Tools::getValue('rsvideo_slider_enabled', Configuration::get('rsvideo_slider_enabled'));
+    $helper->fields_value['rsvideo_intext_placement'] = Tools::getValue('rsvideo_intext_placement', Configuration::get('rsvideo_intext_placement'));
+    $helper->fields_value['rsvideo_intext_width'] = Tools::getValue('rsvideo_intext_width', Configuration::get('rsvideo_intext_width'));
+    $helper->fields_value['rsvideo_intext_height'] = Tools::getValue('rsvideo_intext_height', Configuration::get('rsvideo_intext_height'));
+    $helper->fields_value['rsvideo_intext_target'] = Tools::getValue('rsvideo_intext_target', Configuration::get('rsvideo_intext_target'));
+
 
     return $helper->generateForm([$form]);
   }
