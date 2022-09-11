@@ -21,7 +21,7 @@ This customized javascrip will be included in the page:
             },
             {
               vastUrl: "https://ads.stickyadstv.com/vast/vpaid-adapter/2003",
-              format: "intext"
+              format: "intext",
               width: 400,
               height: 225,
               CSSSelector: "#target"

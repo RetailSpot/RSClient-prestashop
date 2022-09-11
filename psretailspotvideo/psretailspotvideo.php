@@ -28,6 +28,7 @@ class PsRetailSpotVideo extends Module
     if (!Configuration::get('RETAILSPOTVIDEO_NAME')) {
         $this->warning = $this->l('No name provided');
     }
+
   }
 
   public function install()
@@ -38,7 +39,7 @@ class PsRetailSpotVideo extends Module
 
     return (
       parent::install() 
-      && $this->registerHook('header')
+      && $this->registerHook('displayTop')
       && Configuration::updateValue('RETAILSPOTVIDEO_NAME', 'RetailSpotVideo')
     ); 
   }
@@ -135,10 +136,6 @@ class PsRetailSpotVideo extends Module
                   'name' => 'Bottom Right'      // The value of the text content of the  <option> tag.
                 ],
                 [
-                  'id_option' => "bottom",
-                  'name' => 'Bottom'    
-                ],
-                [
                   'id_option' => "bottom left",
                   'name' => 'Bottom Left'    
                 ],
@@ -149,18 +146,6 @@ class PsRetailSpotVideo extends Module
                 [
                   'id_option' => "top right",
                   'name' => 'Top Right'    
-                ],
-                [
-                  'id_option' => "top",
-                  'name' => 'Top'    
-                ],
-                [
-                  'id_option' => "left",
-                  'name' => 'Left'    
-                ],
-                [
-                  'id_option' => "right",
-                  'name' => 'Right'    
                 ]
               ] ,                           
               'id' => 'id_option', // The value of the 'id' key must be the same as the key for 'value' attribute of the <option> tag in each $options sub-array.
@@ -229,5 +214,14 @@ class PsRetailSpotVideo extends Module
 
 
     return $helper->generateForm([$form]);
+  }
+
+  public function hookDisplayTop($params)
+  {
+    //provide values to be accessible by javascript
+    $this->smarty->assign('rsvideo_slider_placement', Configuration::get('rsvideo_slider_placement'));
+
+
+    return $this->display(__FILE__, 'psretailspotvideo.tpl');
   }
 }
