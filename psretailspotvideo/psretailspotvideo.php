@@ -39,7 +39,7 @@ class PsRetailSpotVideo extends Module
 
     return (
       parent::install() 
-      && $this->registerHook('displayTop')
+      && $this->registerHook('displayTop') 
       && Configuration::updateValue('RETAILSPOTVIDEO_NAME', 'RetailSpotVideo')
     ); 
   }
@@ -218,9 +218,27 @@ class PsRetailSpotVideo extends Module
 
   public function hookDisplayTop($params)
   {
-    //provide values to be accessible by javascript
-    $this->smarty->assign('rsvideo_slider_placement', Configuration::get('rsvideo_slider_placement'));
-
+    //provide json config to be accessible by javascript
+    $configArr = [[
+        "vastUrl" => "https://ads.stickyadstv.com/www/delivery/swfIndex.php?reqType=AdsSetup&protocolVersion=2.0&zoneId=".Configuration::get('rsvideo_slider_placement'),
+        "width"   => Configuration::get('rsvideo_slider_width'),
+        "height"  => Configuration::get('rsvideo_slider_height'),
+        "format"  => "slider",
+        "align"   => Configuration::get('rsvideo_slider_align'),
+        // "vmargin" =>50,   // not available from prestashop module
+        // "hmargin" =>50,   // not available from prestashop module
+        // "anim"    =>"top"    // not available from prestashop module. default is 'auto'=>minimal distance animation
+      ],
+      [
+        "vastUrl"     => "https: ads.stickyadstv.com/www/delivery/swfIndex.php?reqType=AdsSetup&protocolVersion=2.0&zoneId=".Configuration::get('rsvideo_intext_placement'),
+        "width"       => Configuration::get('rsvideo_intext_width'),
+        "height"      => Configuration::get('rsvideo_intext_height'),
+        "format"      => "intext",
+        "CSSSelector" => Configuration::get('rsvideo_intext_target'),
+      ],
+    ];
+    
+    $this->smarty->assign('rs_videoad_config', json_encode($configArr, 0, 3));
 
     return $this->display(__FILE__, 'psretailspotvideo.tpl');
   }

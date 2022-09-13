@@ -1,20 +1,22 @@
-
-
-{debug}
-{* This string is commented out *}
-je veux afficher cela 
-
-
+<!-- Block psretailspotvideo -->
 <script type="text/javascript">
-debugger
-
-
-{$hook_top}
-
-alert("yes");
- // var rsvideo_slider_placement = {$rsvideo_slider_placement};
+  var RetailSpotConfig = {$rs_videoad_config};
+  debugger
+  window.onload = function(){
   
- // alert("val: "+rsvideo_slider_placement);
-</script>
+    var s = document.createElement("script");
+    s.src = "http://localhost:3000/dist/rsplayer.js";
+    s.async = true;
+    s.onload = function(){
+      const RS = window.RetailSpot;
 
+      const RetailSpotConfig = 
+
+      RS.init(RetailSpotConfig);
+    }
+    
+    top.document.body.appendChild(s);
+  };
  
+</script>
+<!-- /Block psretailspotvideo -->
