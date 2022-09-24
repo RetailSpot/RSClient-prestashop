@@ -66,10 +66,11 @@ localhost:8081/psadmin/index.php
 Email: demo@prestashop.com
 Password: prestashop_demo
 
-## Running tests
-
-### Running unit tests
-
-### Running lint tests
 
 ## Deployment
+
+To deploy a new version,  run the "deploy.sh" script with the new version number:
+
+```
+./deploy.sh v1.2
+```
