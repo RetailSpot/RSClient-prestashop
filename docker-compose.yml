@@ -19,8 +19,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 8080:80
-    # module folder is mapped for developpement purpose (works only on prestashop 1.6)
+      - 8081:80
     volumes:
       - ./${PS_MODULE_NAME}:/var/www/html/modules/${PS_MODULE_NAME}
     environment:
@@ -32,7 +31,7 @@ services:
       - DB_PASSWD=${DB_PASSWD}
       - DB_NAME=${DB_NAME}
       - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN}
-      - PS_DOMAIN=${PS_DOMAIN}:8080
+      - PS_DOMAIN=${PS_DOMAIN}:8081
       - PS_LANGUAGE=${PS_LANGUAGE}
       - PS_COUNTRY=${PS_COUNTRY}
       - PS_FOLDER_INSTALL=installed
@@ -42,17 +41,19 @@ services:
   #   depends_on:
   #     - mysql
   #   ports:
-  #     - 8080:80
+  #     - 8081:80
+  #   volumes:
+  #     - ./${PS_MODULE_NAME}:/var/www/html/modules/${PS_MODULE_NAME}
   #   environment:
   #     - DB_SERVER=mysql
-  #     - DB_PREFIX=ps161_
+  #     - DB_PREFIX=ps171_
   #     - PS_DEV_MODE=${PS_DEV_MODE}
   #     - PS_INSTALL_AUTO=1
   #     - DB_USER=${DB_USER}
   #     - DB_PASSWD=${DB_PASSWD}
   #     - DB_NAME=${DB_NAME}
   #     - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN}
-  #     - PS_DOMAIN=${PS_DOMAIN}:8080
+  #     - PS_DOMAIN=${PS_DOMAIN}:8081
   #     - PS_LANGUAGE=${PS_LANGUAGE}
   #     - PS_COUNTRY=${PS_COUNTRY}
   #     - PS_FOLDER_INSTALL=installed

@@ -54,18 +54,18 @@ Once docker is installed, you can test this module on prestashop 1.6 by running
 docker-compose up
 ```
 
-This will run prestashop 1.6 on localhost. Go to localost:8080 to see it.
+This will run prestashop 1.6 on localhost. Go to localost:8081 to see it.
 
 Admin page can be accessed at
 
 ```
-localhost:8080/psadmin/index.php
+localhost:8081/psadmin/index.php
 ```
 
 Email: demo@prestashop.com
 Password: prestashop_demo
 
-note that localhost:8081 will point to the latest pretashop version (1.7) see docker-compose.yml 
+see docker-compose.yml to launch and test the latest pretashop version (1.7)  
 
 
 ## Deployment
