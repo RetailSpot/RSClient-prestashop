@@ -66,7 +66,7 @@ Email: demo@prestashop.com
 Password: prestashop_demo
 
 see docker-compose.yml to launch and test the latest pretashop version (1.7)  
-
+In prestashop 1.7 you need to deploy the module in zip archive. Go to Admin > Modules manager > install module and upload the zip file. (no module folder mapping in 1.7)
 
 ## Deployment
 
