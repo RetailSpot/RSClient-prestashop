@@ -48,23 +48,24 @@ This customized javascrip will be included in the page:
 
 #### development environment
 
-Once docker is installed, you can test mutiple prestashop versions by running
+Once docker is installed, you can test this module on prestashop 1.6 by running
 
 ```
 docker-compose up
 ```
 
-This will run one or multiple prestashop versions on localhost. Go to localost:8080 to see it.
-You can edit docker-compose.yml to change the version or to run multiple versions at once.
+This will run prestashop 1.6 on localhost. Go to localost:8080 to see it.
 
 Admin page can be accessed at
 
 ```
-localhost:8081/psadmin/index.php
+localhost:8080/psadmin/index.php
 ```
 
 Email: demo@prestashop.com
 Password: prestashop_demo
+
+note that localhost:8081 will point to the latest pretashop version (1.7) see docker-compose.yml 
 
 
 ## Deployment

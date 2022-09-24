@@ -1,7 +1,15 @@
 <!-- Block psretailspotvideo -->
 <script type="text/javascript">
-  var RetailSpotConfig = {$rs_videoad_config};
-  debugger
+
+  function decodeHtml(html) {
+      var txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
+  }
+
+  var stringInput = decodeHtml('{$rs_videoad_config}');  
+  var RetailSpotConfig = JSON.parse(stringInput);
+  
   window.onload = function(){
   
     var s = document.createElement("script");
