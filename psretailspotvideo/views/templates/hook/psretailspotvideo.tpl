@@ -18,8 +18,6 @@
     s.onload = function(){
       const RS = window.RetailSpot;
 
-      const RetailSpotConfig = 
-
       RS.init(RetailSpotConfig);
     }
     

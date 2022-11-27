@@ -230,7 +230,7 @@ class PsRetailSpotVideo extends Module
         // 'anim'    =>'top'    // not available from prestashop module. default is 'auto'=>minimal distance animation
       ],
       [
-        'vastUrl'     => 'https: ads.stickyadstv.com/www/delivery/swfIndex.php?reqType=AdsSetup&protocolVersion=2.0&zoneId='.Configuration::get('rsvideo_intext_placement'),
+        'vastUrl'     => 'https://ads.stickyadstv.com/www/delivery/swfIndex.php?reqType=AdsSetup&protocolVersion=2.0&zoneId='.Configuration::get('rsvideo_intext_placement'),
         'width'       => Configuration::get('rsvideo_intext_width'),
         'height'      => Configuration::get('rsvideo_intext_height'),
         'format'      => 'intext',
